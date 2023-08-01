@@ -1,31 +1,34 @@
 import { FC, useState } from "react";
 import { validateAsync } from "../api/validateApi";
+import { useNavigate } from "react-router-dom";
 
-// export type LoginPgProps = {
-//   validateAsync: (password: string) => Promise<boolean>;
-// };
+export type LoginPgProps = {
+  // validateAsync: (password: string) => Promise<boolean>;
+  setLoginSuccess: (arg0: boolean) => boolean;
+};
 
-// export const LoginPg: FC<LoginPgProps> = (props) => {
-
-export const LoginPg: FC = (props) => {
+export const LoginPg: FC<LoginPgProps> = (props) => {
+  // export const LoginPg: FC = () => {
   const [password, setPassword] = useState("");
-  console.log(props);
+  //   console.log(props);
+  const navigate = useNavigate();
 
   return (
     <>
       Login Page
       <input
         type="text"
-        // value={password}
+        value={password}
         onChange={(input) => {
           setPassword(input.target.value);
-          console.log("passowrd: ", password);
         }}
       ></input>
       <button
         onClick={async () => {
-          console.log("call validate: ", password);
-          await validateAsync(password);
+          if (await validateAsync(password)) {
+            props.setLoginSuccess(true);
+            navigate("/HomePg");
+          }
         }}
       >
         Validate
