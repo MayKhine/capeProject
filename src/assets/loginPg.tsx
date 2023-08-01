@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export type LoginPgProps = {
   // validateAsync: (password: string) => Promise<boolean>;
-  setLoginSuccess: (arg0: boolean) => boolean;
+  setLoginSuccess: (arg0: boolean) => void;
 };
 
 export const LoginPg: FC<LoginPgProps> = (props) => {

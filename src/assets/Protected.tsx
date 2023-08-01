@@ -1,17 +1,13 @@
 // import { Children } from "react";
-import { FC } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { FC, PropsWithChildren } from "react";
+import { Navigate } from "react-router-dom";
 
-export type ProtectedProps = {
-  // validateAsync: (password: string) => Promise<boolean>;
+export type ProtectedProps = PropsWithChildren<{
   isLoggedIn: boolean;
-  children: any;
-};
+  // children: JSX.Element;
+}>;
 export const Protected: FC<ProtectedProps> = (props) => {
-  //   const navigate = useNavigate();
-
   if (!props.isLoggedIn) {
-    // return navigate("/ErrorPg");
     return <Navigate to="/ErrorPg" replace />;
   }
   return props.children;

@@ -1,9 +1,8 @@
 // import { useState } from "react";
 import "./App.css";
 import { LoginPg } from "./assets/LoginPg";
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePg } from "./assets/homePg";
+import { HomePg } from "./assets/HomePg";
 import { useState } from "react";
 import { ErrorPg } from "./assets/ErrorPg";
 import { Protected } from "./assets/Protected";
@@ -16,7 +15,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<LoginPg setLoginSuccess />} />
+            <Route
+              index
+              element={<LoginPg setLoginSuccess={setLoginSuccess} />}
+            />
             <Route
               path="HomePg"
               element={
