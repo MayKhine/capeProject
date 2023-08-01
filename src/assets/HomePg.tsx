@@ -1,5 +1,8 @@
 import { useState, FC } from "react";
 
-export const HomePg: FC = () => {
-  return <div>This is Home Page! You did your routing!</div>;
+export type HomePgProps = {
+  loginUser: string;
+};
+export const HomePg: FC = (props) => {
+  return <div>Welcome to home page {props.loginUser}</div>;
 };
