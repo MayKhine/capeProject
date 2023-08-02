@@ -37,7 +37,7 @@ export const LoginPg: FC<LoginPgProps> = (props) => {
           <label style={labelStyle}>Password</label>
           <input
             style={inputStyle}
-            type="text"
+            type="password"
             value={password}
             onChange={(input) => {
               setPswError("");

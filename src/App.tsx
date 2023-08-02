@@ -3,12 +3,19 @@ import "./App.css";
 import { LoginPg } from "./assets/LoginPg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePg } from "./assets/HomePg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ErrorPg } from "./assets/ErrorPg";
 import { Protected } from "./assets/Protected";
 function App() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginUser, setLoginUser] = useState("");
+  const [bookDateRange, setBookDateRange] = useState([]);
+
+  useEffect(() => {
+    console.log("Use effect");
+    localStorage.setItem("bookdates", JSON.stringify(bookDateRange));
+  }, [bookDateRange]);
+
   return (
     <div style={mainDivStyle}>
       <div style={headerStyle}>Cape House Sharing Project</div>
@@ -30,7 +37,10 @@ function App() {
                 path="Home"
                 element={
                   <Protected isLoggedIn={loginSuccess}>
-                    <HomePg loginUser={loginUser} />
+                    <HomePg
+                      loginUser={loginUser}
+                      setBookDateRange={setBookDateRange}
+                    />
                   </Protected>
                 }
               />
