@@ -3,18 +3,15 @@ import "./App.css";
 import { LoginPg } from "./assets/LoginPg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePg } from "./assets/HomePg";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ErrorPg } from "./assets/ErrorPg";
 import { Protected } from "./assets/Protected";
+import { useLocalStorage } from "usehooks-ts";
+
 function App() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginUser, setLoginUser] = useState("");
   const [bookDateRange, setBookDateRange] = useState([]);
-
-  useEffect(() => {
-    console.log("Use effect");
-    localStorage.setItem("bookdates", JSON.stringify(bookDateRange));
-  }, [bookDateRange]);
 
   return (
     <div style={mainDivStyle}>
@@ -30,6 +27,7 @@ function App() {
                   <LoginPg
                     setLoginSuccess={setLoginSuccess}
                     setLoginUser={setLoginUser}
+                    bookDateRange={bookDateRange}
                   />
                 }
               />
@@ -40,6 +38,7 @@ function App() {
                     <HomePg
                       loginUser={loginUser}
                       setBookDateRange={setBookDateRange}
+                      bookDateRange={bookDateRange}
                     />
                   </Protected>
                 }

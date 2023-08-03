@@ -2,9 +2,9 @@ import { FC, useState } from "react";
 import { validateAsync } from "../api/validateApi";
 import { useNavigate } from "react-router-dom";
 export type LoginPgProps = {
-  // validateAsync: (password: string) => Promise<boolean>;
   setLoginSuccess: (arg0: boolean) => void;
   setLoginUser: (arg0: string) => void;
+  bookDateRange: Array<Date>;
 };
 
 export const LoginPg: FC<LoginPgProps> = (props) => {
@@ -68,6 +68,14 @@ export const LoginPg: FC<LoginPgProps> = (props) => {
             }}
           >
             Login
+          </button>
+          <button
+            onClick={() => {
+              console.log("date range: ", props.bookDateRange);
+            }}
+          >
+            {" "}
+            Show me date range
           </button>
         </div>
       </div>
