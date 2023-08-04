@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { validateAsync } from "../api/validateApi";
 import { useNavigate } from "react-router-dom";
+
 export type LoginPgProps = {
   setLoginSuccess: (arg0: boolean) => void;
   setLoginUser: (arg0: string) => void;
