@@ -19,11 +19,7 @@ export const Calander: FC<CalanderProps> = (props) => {
   const [bookedDatesDic, setBookedDatesDic] = useState<Record<string, number>>(
     {}
   );
-  /*
-    {
-      "08/02/2023": 1
-    }
-  */
+  const [privacy, setPrivacy] = useState<number>();
 
   const insertBookingDays = (startDate: DateTime, endDate: DateTime) => {
     const days = (endDate - startDate) / (86400 * 1000);
@@ -34,7 +30,11 @@ export const Calander: FC<CalanderProps> = (props) => {
     setBookedDatesDic({ ...bookedDatesDic });
   };
 
-  const checkBookingDays = (startDate: DateTime, endDate: DateTime) => {
+  const checkBookingDays = (
+    startDate: DateTime,
+    endDate: DateTime,
+    privacy: number
+  ) => {
     const days = (endDate - startDate) / (86400 * 1000);
     for (let i = 0; i <= days; i++) {
       const key = startDate.plus({ days: i }).toLocaleString();
@@ -50,35 +50,79 @@ export const Calander: FC<CalanderProps> = (props) => {
     <>
       Calander Div
       <Group position="center">
-        {/* <DateInput></DateInput> */}
         <DatePicker
+          style={{
+            backgroundColor: "white",
+            borderRadius: "8px",
+            padding: "10px",
+          }}
+          weekendDays={[]}
           type="range"
           allowDeselect
           value={dateRange}
           onChange={setDateRange}
+          getMonthControlProps={() => {
+            return {
+              sx: { color: "red", backgroundColor: "black", fontSize: "50px" },
+            };
+          }}
           getDayProps={(dateJs) => {
             const dt = DateTime.fromJSDate(dateJs).toLocaleString();
             if (bookedDatesDic[dt]) {
               return {
-                sx: (theme) => ({
-                  backgroundColor: "#e0d3db",
-                  color: "#002cff",
+                sx: () => ({
+                  backgroundColor: "darkgray",
+                  color: "white",
                 }),
               };
             }
+            return {
+              sx: {
+                color: "gray",
+              },
+            };
           }}
         ></DatePicker>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="radio"
+              onClick={() => {
+                console.log("whilling to share is checked");
+                setPrivacy(1);
+              }}
+            ></input>
+            willing to share
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="radio"
+              onClick={() => {
+                console.log("Prefer privacy is checked");
+                setPrivacy(2);
+              }}
+            ></input>
+            prefer privacy
+          </label>
+        </div>
         <Button
           onClick={() => {
             if (dateRange[0] == null) {
               console.log("Start date is NULL");
               return;
             }
+            if (!privacy) {
+              console.log("Privacy settting has to choose");
+              return;
+            }
             const bookingSuccess = checkBookingDays(
               DateTime.fromJSDate(dateRange[0]),
               dateRange[1]
                 ? DateTime.fromJSDate(dateRange[1])
-                : DateTime.fromJSDate(dateRange[0])
+                : DateTime.fromJSDate(dateRange[0]),
+              privacy
             );
             bookingSuccess &&
               insertBookingDays(
@@ -97,10 +141,6 @@ export const Calander: FC<CalanderProps> = (props) => {
         <Button
           onClick={() => {
             console.log("bookedDatesDIc: ", bookedDatesDic);
-
-            // console.log("Date range: ", dateRange);
-
-            // console.log("Date range: ", props.bookDateRange);
           }}
         >
           Print the booked Date range
