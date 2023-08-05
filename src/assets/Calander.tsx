@@ -15,14 +15,14 @@ export const Calander: FC<CalanderProps> = ({
   setBookedDatesDic,
   loginUser,
 }) => {
-  const [dateRange, setDateRange] = //useState([]);
-    useState<[Date | null, Date | null]>([null, null]);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    null,
+    null,
+  ]);
 
   const [privacy, setPrivacy] = useState<number | null>();
   const [error, setError] = useState<string>();
-  const [note, setNote] = useState<string>();
   const [bookingName, setBookingName] = useState<string>("");
-  // const [curNameArr, setCurNameArr] = useState<Array<string>>();
 
   const insertBookingDays = (
     startDate: DateTime,
@@ -34,26 +34,21 @@ export const Calander: FC<CalanderProps> = ({
     for (let i = 0; i <= days; i++) {
       console.log("name: ", name);
       const key = startDate.plus({ days: i }).toLocaleString();
-      // let curNameArr = [bookedDatesDic[key]?.name];
-      // bookedDatesDic[key] = { privacy: privacy, name: curNameArr.push(name) };
       if (bookedDatesDic[key]?.name) {
-        console.log(
-          "booking already exist and name is ",
-          bookedDatesDic[key].name
-        );
-        // bookedDatesDic[key].name.push(name);
-        let newNameArr = bookedDatesDic[key].name;
-        newNameArr.push(name);
-        console.log("new name arr: ", newNameArr);
+        let tempNameArr = bookedDatesDic[key].name;
+        tempNameArr.push(name);
         bookedDatesDic[key] = {
           privacy: privacy,
-          name: newNameArr,
+          name: tempNameArr,
+          date: key,
         };
       } else {
-        bookedDatesDic[key] = { privacy: privacy, name: [name] };
+        bookedDatesDic[key] = { privacy: privacy, name: [name], date: key };
       }
     }
     setBookedDatesDic({ ...bookedDatesDic });
+    setBookingName("");
+
     console.log("bookedDatesDic[key]: ", bookedDatesDic);
   };
 
@@ -106,7 +101,6 @@ export const Calander: FC<CalanderProps> = ({
               console.log("months JS ", monthJs);
               return {
                 sx: {
-                  // color: "red",
                   fontSize: "25px",
                 },
               };
@@ -134,12 +128,11 @@ export const Calander: FC<CalanderProps> = ({
               return {
                 sx: {
                   color: "gray",
-                  fontSize: "20px",
+                  fontSize: "18px",
                 },
               };
             }}
           ></DatePicker>
-          {note && <div>{note}</div>}
           {error && <div style={{ color: "red" }}>{error}</div>}
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -208,6 +201,7 @@ export const Calander: FC<CalanderProps> = ({
                 setError("Please enter a name to book!");
                 return;
               }
+
               const bookingSuccess = checkBookingDays(
                 DateTime.fromJSDate(dateRange[0]),
                 dateRange[1]
@@ -215,7 +209,7 @@ export const Calander: FC<CalanderProps> = ({
                   : DateTime.fromJSDate(dateRange[0]),
                 privacy
               );
-              console.log("loginuser: ", loginUser);
+
               bookingSuccess &&
                 insertBookingDays(
                   DateTime.fromJSDate(dateRange[0]),
@@ -231,13 +225,14 @@ export const Calander: FC<CalanderProps> = ({
           >
             Book
           </Button>
+
           <Button
             style={{ marginTop: "10px", width: "100px" }}
             onClick={() => {
               console.log("bookedDatesDIc: ", bookedDatesDic);
             }}
           >
-            Print the booked Date range
+            Print
           </Button>
         </div>
       </Group>

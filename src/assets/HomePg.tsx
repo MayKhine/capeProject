@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, FC, useMemo } from "react";
 import { Calander } from "./Calander";
 import { Button } from "@mantine/core";
 
@@ -9,17 +9,27 @@ export type HomePgProps = {
 };
 
 export const HomePg: FC<HomePgProps> = (props) => {
-  // const [bookedDatesDic, setBookedDatesDic] = useState<Record<string, number>>(
-  //   {}
-  // );
-
   interface bookingInfo {
     privacy: number;
     name: Array<string>;
+    date: string;
   }
+
+  // const [bookingInfo, setBookingInfo] = useState<Array<object>>([{}]);
+
+  // const bookingDictionary = useMemo(() => {
+  //   return // claculate booking dictionary
+  // }, [bookingInfo])
+
+  // const [bookingDictionary, setBookingDictionary] =
+  //   useState<Record<string, number>>();
+
   const [bookedDatesDic, setBookedDatesDic] = useState<
     Record<string, bookingInfo>
   >({});
+
+  const bookingArr = Object.values(bookedDatesDic);
+  const keyValueParis = Object.entries(bookedDatesDic);
 
   return (
     <div>
@@ -31,13 +41,17 @@ export const HomePg: FC<HomePgProps> = (props) => {
           loginUser={props.loginUser}
         ></Calander>
       </div>
-      {/* <Button
-        onClick={() => {
-          console.log("bookedDatesDIc: ", bookedDatesDic);
-        }}
-      >
-        Print the booked Date range
-      </Button> */}
+      <div>
+        Booking Details
+        {bookingArr.map((e) => {
+          // console.log(e);
+          return (
+            <div>
+              {e.date} {e.name}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
