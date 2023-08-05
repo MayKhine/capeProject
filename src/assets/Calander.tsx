@@ -5,14 +5,20 @@ import { useState } from "react";
 import { DateTime } from "luxon";
 
 export type CalanderProps = {
-  setBookedDatesDic: (arg0: Record<string, number>) => void;
-  bookedDatesDic: Record<string, number>;
+  setBookingInfo: (arg0: Array<object>) => void;
+  bookingInfo: Array<object>;
+  bookingDictionary: Record<string, number>;
+
+  // setBookedDatesDic: (arg0: Record<string, number>) => void;
+  // bookedDatesDic: Record<string, number>;
+
   loginUser: string;
 };
 
 export const Calander: FC<CalanderProps> = ({
-  bookedDatesDic,
-  setBookedDatesDic,
+  bookingInfo,
+  setBookingInfo,
+  bookingDictionary,
   loginUser,
 }) => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
@@ -24,32 +30,85 @@ export const Calander: FC<CalanderProps> = ({
   const [error, setError] = useState<string>();
   const [bookingName, setBookingName] = useState<string>("");
 
-  const insertBookingDays = (
+  // const insertBookingDays = (
+  //   startDate: DateTime,
+  //   endDate: DateTime,
+  //   privacy: number,
+  //   name: string
+  // ) => {
+  //   const days = (endDate - startDate) / (86400 * 1000);
+  //   for (let i = 0; i <= days; i++) {
+  //     console.log("name: ", name);
+  //     const key = startDate.plus({ days: i }).toLocaleString();
+  //     if (bookedDatesDic[key]?.name) {
+  //       let tempNameArr = bookedDatesDic[key].name;
+  //       tempNameArr.push(name);
+  //       bookedDatesDic[key] = {
+  //         privacy: privacy,
+  //         name: tempNameArr,
+  //         date: key,
+  //       };
+  //     } else {
+  //       bookedDatesDic[key] = { privacy: privacy, name: [name], date: key };
+  //     }
+  //   }
+  //   setBookedDatesDic({ ...bookedDatesDic });
+  //   setBookingName("");
+
+  //   console.log("bookedDatesDic[key]: ", bookedDatesDic);
+  // };
+
+  const updateBookingInfo = (
     startDate: DateTime,
     endDate: DateTime,
     privacy: number,
     name: string
   ) => {
-    const days = (endDate - startDate) / (86400 * 1000);
+    const days = calculateDays(startDate, endDate);
     for (let i = 0; i <= days; i++) {
-      console.log("name: ", name);
-      const key = startDate.plus({ days: i }).toLocaleString();
-      if (bookedDatesDic[key]?.name) {
-        let tempNameArr = bookedDatesDic[key].name;
-        tempNameArr.push(name);
-        bookedDatesDic[key] = {
+      const newBooking = {
+        startDate: startDate,
+        endDate: endDate,
+        privacy: privacy,
+        name: name,
+      };
+      setBookingInfo([
+        ...bookingInfo,
+        {
+          startDate: startDate,
+          endDate: endDate,
           privacy: privacy,
-          name: tempNameArr,
-          date: key,
-        };
-      } else {
-        bookedDatesDic[key] = { privacy: privacy, name: [name], date: key };
-      }
+          name: name,
+        },
+      ]);
+      console.log("Bookign info ", bookingInfo);
     }
-    setBookedDatesDic({ ...bookedDatesDic });
-    setBookingName("");
+  };
 
-    console.log("bookedDatesDic[key]: ", bookedDatesDic);
+  // const checkBookingDays = (
+  //   startDate: DateTime,
+  //   endDate: DateTime,
+  //   privacy: number
+  // ) => {
+  //   const days = (endDate - startDate) / (86400 * 1000);
+  //   for (let i = 0; i <= days; i++) {
+  //     const key = startDate.plus({ days: i }).toLocaleString();
+
+  //     if (bookedDatesDic[key]?.privacy == 2) {
+  //       setError("Already booked with full privacy!");
+  //       return false;
+  //     }
+  //     if (bookedDatesDic[key]?.privacy == 1 && privacy == 2) {
+  //       setError("Cannot double book for full privacy!");
+
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // };
+
+  const calculateDays = (startDate: DateTime, endDate: DateTime) => {
+    return (endDate - startDate) / (86400 * 1000);
   };
 
   const checkBookingDays = (
@@ -57,18 +116,22 @@ export const Calander: FC<CalanderProps> = ({
     endDate: DateTime,
     privacy: number
   ) => {
-    const days = (endDate - startDate) / (86400 * 1000);
+    const days = calculateDays(startDate, endDate);
+
     for (let i = 0; i <= days; i++) {
       const key = startDate.plus({ days: i }).toLocaleString();
 
-      if (bookedDatesDic[key]?.privacy == 2) {
-        setError("Already booked with full privacy!");
-        return false;
-      }
-      if (bookedDatesDic[key]?.privacy == 1 && privacy == 2) {
-        setError("Cannot double book for full privacy!");
+      if (bookingDictionary) {
+        const keyPrivacy = bookingDictionary[key];
 
-        return false;
+        if (keyPrivacy == 2) {
+          setError("Already booked with full privacy!");
+          return false;
+        }
+        if (keyPrivacy == 1 && privacy == 2) {
+          setError("Cannot double book for full privacy!");
+          return false;
+        }
       }
     }
     return true;
@@ -108,23 +171,23 @@ export const Calander: FC<CalanderProps> = ({
             getDayProps={(dateJs) => {
               const dt = DateTime.fromJSDate(dateJs).toLocaleString();
 
-              if (bookedDatesDic[dt]?.privacy == 1) {
-                return {
-                  sx: (theme) => ({
-                    backgroundColor: "lightgray",
-                    color: "black",
-                    ...theme.fn.hover(),
-                  }),
-                };
-              }
-              if (bookedDatesDic[dt]?.privacy == 2) {
-                return {
-                  sx: () => ({
-                    backgroundColor: "darkgray",
-                    color: "black",
-                  }),
-                };
-              }
+              // if (bookingDictionary[dt]?.privacy == 1) {
+              //   return {
+              //     sx: (theme) => ({
+              //       backgroundColor: "lightgray",
+              //       color: "black",
+              //       ...theme.fn.hover(),
+              //     }),
+              //   };
+              // }
+              // if (bookingDictionary[dt]?.privacy == 2) {
+              //   return {
+              //     sx: () => ({
+              //       backgroundColor: "darkgray",
+              //       color: "black",
+              //     }),
+              //   };
+              // }
               return {
                 sx: {
                   color: "gray",
@@ -211,7 +274,7 @@ export const Calander: FC<CalanderProps> = ({
               );
 
               bookingSuccess &&
-                insertBookingDays(
+                updateBookingInfo(
                   DateTime.fromJSDate(dateRange[0]),
                   dateRange[1]
                     ? DateTime.fromJSDate(dateRange[1])

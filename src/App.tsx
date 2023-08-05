@@ -11,7 +11,7 @@ import { useLocalStorage } from "usehooks-ts";
 function App() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginUser, setLoginUser] = useState("");
-  const [bookDateRange, setBookDateRange] = useState([]);
+  // const [bookDateRange, setBookDateRange] = useState([]);
 
   return (
     <div style={mainDivStyle}>
@@ -27,7 +27,7 @@ function App() {
                   <LoginPg
                     setLoginSuccess={setLoginSuccess}
                     setLoginUser={setLoginUser}
-                    bookDateRange={bookDateRange}
+                    // bookDateRange={bookDateRange}
                   />
                 }
               />
@@ -37,8 +37,8 @@ function App() {
                   <Protected isLoggedIn={loginSuccess}>
                     <HomePg
                       loginUser={loginUser}
-                      setBookDateRange={setBookDateRange}
-                      bookDateRange={bookDateRange}
+                      // setBookDateRange={setBookDateRange}
+                      // bookDateRange={bookDateRange}
                     />
                   </Protected>
                 }

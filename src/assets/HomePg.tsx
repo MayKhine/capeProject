@@ -4,54 +4,69 @@ import { Button } from "@mantine/core";
 
 export type HomePgProps = {
   loginUser: string;
-  setBookDateRange: (arg0: Array<Date>) => void;
-  bookDateRange: Array<Date>;
+  // setBookDateRange: (arg0: Array<Date>) => void;
+  // bookDateRange: Array<Date>;
 };
 
 export const HomePg: FC<HomePgProps> = (props) => {
-  interface bookingInfo {
-    privacy: number;
-    name: Array<string>;
-    date: string;
-  }
+  // interface bookingInfo {
+  //   privacy: number;
+  //   name: Array<string>;
+  //   date: string;
+  // }
 
-  // const [bookingInfo, setBookingInfo] = useState<Array<object>>([{}]);
+  const [bookingInfo, setBookingInfo] = useState<Array<object>>([]);
 
-  // const bookingDictionary = useMemo(() => {
-  //   return // claculate booking dictionary
-  // }, [bookingInfo])
+  //   const days = (endDate - startDate) / (86400 * 1000);
+  //   for (let i = 0; i <= days; i++) {
+  //     console.log("name: ", name);
+  //     const key = startDate.plus({ days: i }).toLocaleString();
+  //     if (bookedDatesDic[key]?.name) {
+  //       let tempNameArr = bookedDatesDic[key].name;
+  //       tempNameArr.push(name);
+  //       bookedDatesDic[key] = {
+  //         privacy: privacy,
+  //         name: tempNameArr,
+  //         date: key,
+  //       };
+  //     } else {
+  //       bookedDatesDic[key] = { privacy: privacy, name: [name], date: key };
+  //     }
+
+  const bookingDictionary = useMemo(() => {
+    // return // claculate booking dictionary
+    bookingInfo.forEach((booking) => {
+      console.log("booking: ", booking.startDate);
+      const days = (booking.endDate - booking.startDate) / (86400 * 1000);
+    });
+
+    return;
+  }, [bookingInfo]);
 
   // const [bookingDictionary, setBookingDictionary] =
   //   useState<Record<string, number>>();
 
-  const [bookedDatesDic, setBookedDatesDic] = useState<
-    Record<string, bookingInfo>
-  >({});
+  // const [bookedDatesDic, setBookedDatesDic] = useState<
+  //   Record<string, bookingInfo>
+  // >({});
 
-  const bookingArr = Object.values(bookedDatesDic);
-  const keyValueParis = Object.entries(bookedDatesDic);
+  // const bookingArr = Object.values(bookedDatesDic);
+  // const keyValueParis = Object.entries(bookedDatesDic);
 
   return (
     <div>
       Welcome to home page {props.loginUser}
       <div style={{ backgroundColor: "pink" }}>
         <Calander
-          setBookedDatesDic={setBookedDatesDic}
-          bookedDatesDic={bookedDatesDic}
+          setBookingInfo={setBookingInfo}
+          bookingInfo={bookingInfo}
+          bookingDictionary={bookingDictionary}
+          // setBookedDatesDic={setBookedDatesDic}
+          // bookedDatesDic={bookedDatesDic}
           loginUser={props.loginUser}
         ></Calander>
       </div>
-      <div>
-        Booking Details
-        {bookingArr.map((e) => {
-          // console.log(e);
-          return (
-            <div>
-              {e.date} {e.name}
-            </div>
-          );
-        })}
-      </div>
+      <div>Booking Details</div>
     </div>
   );
 };
