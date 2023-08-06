@@ -34,14 +34,22 @@ export const HomePg: FC<HomePgProps> = (props) => {
   //     }
 
   const bookingDictionary = useMemo(() => {
-    // return // claculate booking dictionary
+    console.log("Bookign Info:", bookingInfo);
+    let tempDictionary: Record<string, number> = {};
     bookingInfo.forEach((booking) => {
       console.log("booking: ", booking.startDate);
       const days = (booking.endDate - booking.startDate) / (86400 * 1000);
+      for (let i = 0; i <= days; i++) {
+        const key = booking.startDate.plus({ days: i }).toLocaleString();
+        tempDictionary[key] = booking.privacy;
+      }
     });
+    console.log("temp Dictionary: ", tempDictionary);
 
-    return;
+    return tempDictionary;
   }, [bookingInfo]);
+
+  console.log("Bookign Dictionary: ", bookingDictionary);
 
   // const [bookingDictionary, setBookingDictionary] =
   //   useState<Record<string, number>>();

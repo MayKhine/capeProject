@@ -81,7 +81,6 @@ export const Calander: FC<CalanderProps> = ({
           name: name,
         },
       ]);
-      console.log("Bookign info ", bookingInfo);
     }
   };
 
