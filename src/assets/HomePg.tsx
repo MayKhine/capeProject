@@ -36,18 +36,27 @@ export const HomePg: FC<HomePgProps> = (props) => {
   return (
     <div>
       Welcome to home page {props.loginUser}
-      <div style={{ backgroundColor: "pink" }}>
-        <Calander
-          setBookingInfo={setBookingInfo}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ backgroundColor: "pink" }}>
+          <Calander
+            setBookingInfo={setBookingInfo}
+            bookingInfo={bookingInfo}
+            bookingDictionary={bookingDictionary}
+            loginUser={props.loginUser}
+          ></Calander>
+        </div>
+        <BookingDetail
           bookingInfo={bookingInfo}
           bookingDictionary={bookingDictionary}
-          loginUser={props.loginUser}
-        ></Calander>
+        ></BookingDetail>
       </div>
-      <BookingDetail
-        bookingInfo={bookingInfo}
-        bookingDictionary={bookingDictionary}
-      ></BookingDetail>
     </div>
   );
 };

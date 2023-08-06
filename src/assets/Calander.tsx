@@ -25,7 +25,7 @@ export const Calander: FC<CalanderProps> = ({
   const [privacy, setPrivacy] = useState<number | null>();
   const [error, setError] = useState<string>();
   const [bookingName, setBookingName] = useState<string>("");
-
+  const [startBooking, setStartBooking] = useState<boolean>(false);
   const updateBookingInfo = (
     startDate: DateTime,
     endDate: DateTime,
@@ -49,6 +49,8 @@ export const Calander: FC<CalanderProps> = ({
           name: name,
         },
       ]);
+
+      setStartBooking(false);
     }
   };
 
@@ -143,101 +145,124 @@ export const Calander: FC<CalanderProps> = ({
           ></DatePicker>
           {error && <div style={{ color: "red" }}>{error}</div>}
         </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-            }}
-          >
-            <label>Wanna share the house</label>
-            <label>
-              <input
-                style={{
-                  paddingTop: "5px",
-                  width: "20px",
-                  height: "20px",
-                }}
-                type="radio"
-                name="radio"
-                onClick={() => {
-                  setError("");
-                  setPrivacy(1);
-                }}
-              ></input>
-              willing to share
-            </label>
-            <label>
-              <input
-                style={{ paddingTop: "5px", width: "20px", height: "20px" }}
-                type="radio"
-                name="radio"
-                onClick={() => {
-                  setError("");
-                  setPrivacy(2);
-                }}
-              ></input>
-              prefer privacy
-            </label>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "10px",
-            }}
-          >
-            <label style={{ textAlign: "left" }}>Booking name</label>
-            <input
-              value={bookingName}
-              onChange={(e) => {
-                setError("");
-                setBookingName(e.target.value);
+
+        {!startBooking && (
+          <div>
+            <Button
+              onClick={() => {
+                setStartBooking(true);
               }}
-              type="text"
-            ></input>
+            >
+              Start Booking
+            </Button>
           </div>
-          <Button
-            style={{ marginTop: "10px", width: "100px" }}
-            onClick={() => {
-              if (dateRange[0] == null) {
-                setError("Booking start date is not picked!");
-                return;
-              }
-              if (!privacy) {
-                setError("Please choose a privacy setting!");
-                return;
-              }
-              if (!bookingName) {
-                setError("Please enter a name to book!");
-                return;
-              }
+        )}
 
-              const bookingSuccess = checkBookingDays(
-                DateTime.fromJSDate(dateRange[0]),
-                dateRange[1]
-                  ? DateTime.fromJSDate(dateRange[1])
-                  : DateTime.fromJSDate(dateRange[0]),
-                privacy
-              );
+        {startBooking && (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <label>Wanna share the house</label>
+              <label>
+                <input
+                  style={{
+                    paddingTop: "5px",
+                    width: "20px",
+                    height: "20px",
+                  }}
+                  type="radio"
+                  name="radio"
+                  onClick={() => {
+                    setError("");
+                    setPrivacy(1);
+                  }}
+                ></input>
+                willing to share
+              </label>
+              <label>
+                <input
+                  style={{ paddingTop: "5px", width: "20px", height: "20px" }}
+                  type="radio"
+                  name="radio"
+                  onClick={() => {
+                    setError("");
+                    setPrivacy(2);
+                  }}
+                ></input>
+                prefer privacy
+              </label>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingTop: "10px",
+              }}
+            >
+              <label style={{ textAlign: "left" }}>Booking name</label>
+              <input
+                value={bookingName}
+                onChange={(e) => {
+                  setError("");
+                  setBookingName(e.target.value);
+                }}
+                type="text"
+              ></input>
+            </div>
+            <Button
+              style={{ marginTop: "10px", width: "100px" }}
+              onClick={() => {
+                setStartBooking(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              style={{ marginTop: "10px", width: "100px" }}
+              onClick={() => {
+                if (dateRange[0] == null) {
+                  setError("Booking start date is not picked!");
+                  return;
+                }
+                if (!privacy) {
+                  setError("Please choose a privacy setting!");
+                  return;
+                }
+                if (!bookingName) {
+                  setError("Please enter a name to book!");
+                  return;
+                }
 
-              bookingSuccess &&
-                updateBookingInfo(
+                const bookingSuccess = checkBookingDays(
                   DateTime.fromJSDate(dateRange[0]),
                   dateRange[1]
                     ? DateTime.fromJSDate(dateRange[1])
                     : DateTime.fromJSDate(dateRange[0]),
-                  privacy,
-                  bookingName
+                  privacy
                 );
 
-              setDateRange([null, null]);
-            }}
-          >
-            Book
-          </Button>
-        </div>
+                bookingSuccess &&
+                  updateBookingInfo(
+                    DateTime.fromJSDate(dateRange[0]),
+                    dateRange[1]
+                      ? DateTime.fromJSDate(dateRange[1])
+                      : DateTime.fromJSDate(dateRange[0]),
+                    privacy,
+                    bookingName
+                  );
+
+                setDateRange([null, null]);
+              }}
+            >
+              Book
+            </Button>
+          </div>
+        )}
       </Group>
     </>
   );
