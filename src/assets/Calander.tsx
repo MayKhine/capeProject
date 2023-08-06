@@ -8,10 +8,6 @@ export type CalanderProps = {
   setBookingInfo: (arg0: Array<object>) => void;
   bookingInfo: Array<object>;
   bookingDictionary: Record<string, number>;
-
-  // setBookedDatesDic: (arg0: Record<string, number>) => void;
-  // bookedDatesDic: Record<string, number>;
-
   loginUser: string;
 };
 
@@ -29,34 +25,6 @@ export const Calander: FC<CalanderProps> = ({
   const [privacy, setPrivacy] = useState<number | null>();
   const [error, setError] = useState<string>();
   const [bookingName, setBookingName] = useState<string>("");
-
-  // const insertBookingDays = (
-  //   startDate: DateTime,
-  //   endDate: DateTime,
-  //   privacy: number,
-  //   name: string
-  // ) => {
-  //   const days = (endDate - startDate) / (86400 * 1000);
-  //   for (let i = 0; i <= days; i++) {
-  //     console.log("name: ", name);
-  //     const key = startDate.plus({ days: i }).toLocaleString();
-  //     if (bookedDatesDic[key]?.name) {
-  //       let tempNameArr = bookedDatesDic[key].name;
-  //       tempNameArr.push(name);
-  //       bookedDatesDic[key] = {
-  //         privacy: privacy,
-  //         name: tempNameArr,
-  //         date: key,
-  //       };
-  //     } else {
-  //       bookedDatesDic[key] = { privacy: privacy, name: [name], date: key };
-  //     }
-  //   }
-  //   setBookedDatesDic({ ...bookedDatesDic });
-  //   setBookingName("");
-
-  //   console.log("bookedDatesDic[key]: ", bookedDatesDic);
-  // };
 
   const updateBookingInfo = (
     startDate: DateTime,
@@ -83,28 +51,6 @@ export const Calander: FC<CalanderProps> = ({
       ]);
     }
   };
-
-  // const checkBookingDays = (
-  //   startDate: DateTime,
-  //   endDate: DateTime,
-  //   privacy: number
-  // ) => {
-  //   const days = (endDate - startDate) / (86400 * 1000);
-  //   for (let i = 0; i <= days; i++) {
-  //     const key = startDate.plus({ days: i }).toLocaleString();
-
-  //     if (bookedDatesDic[key]?.privacy == 2) {
-  //       setError("Already booked with full privacy!");
-  //       return false;
-  //     }
-  //     if (bookedDatesDic[key]?.privacy == 1 && privacy == 2) {
-  //       setError("Cannot double book for full privacy!");
-
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // };
 
   const calculateDays = (startDate: DateTime, endDate: DateTime) => {
     return (endDate - startDate) / (86400 * 1000);
@@ -170,23 +116,23 @@ export const Calander: FC<CalanderProps> = ({
             getDayProps={(dateJs) => {
               const dt = DateTime.fromJSDate(dateJs).toLocaleString();
 
-              // if (bookingDictionary[dt]?.privacy == 1) {
-              //   return {
-              //     sx: (theme) => ({
-              //       backgroundColor: "lightgray",
-              //       color: "black",
-              //       ...theme.fn.hover(),
-              //     }),
-              //   };
-              // }
-              // if (bookingDictionary[dt]?.privacy == 2) {
-              //   return {
-              //     sx: () => ({
-              //       backgroundColor: "darkgray",
-              //       color: "black",
-              //     }),
-              //   };
-              // }
+              if (bookingDictionary[dt] == 1) {
+                return {
+                  sx: (theme) => ({
+                    backgroundColor: "lightgray",
+                    color: "black",
+                    ...theme.fn.hover(),
+                  }),
+                };
+              }
+              if (bookingDictionary[dt] == 2) {
+                return {
+                  sx: () => ({
+                    backgroundColor: "darkgray",
+                    color: "black",
+                  }),
+                };
+              }
               return {
                 sx: {
                   color: "gray",
@@ -208,7 +154,11 @@ export const Calander: FC<CalanderProps> = ({
             <label>Wanna share the house</label>
             <label>
               <input
-                style={{ paddingTop: "5px", width: "20px", height: "20px" }}
+                style={{
+                  paddingTop: "5px",
+                  width: "20px",
+                  height: "20px",
+                }}
                 type="radio"
                 name="radio"
                 onClick={() => {
@@ -286,15 +236,6 @@ export const Calander: FC<CalanderProps> = ({
             }}
           >
             Book
-          </Button>
-
-          <Button
-            style={{ marginTop: "10px", width: "100px" }}
-            onClick={() => {
-              console.log("bookedDatesDIc: ", bookedDatesDic);
-            }}
-          >
-            Print
           </Button>
         </div>
       </Group>
