@@ -5,13 +5,10 @@ import { useNavigate } from "react-router-dom";
 export type LoginPgProps = {
   setLoginSuccess: (arg0: boolean) => void;
   setLoginUser: (arg0: string) => void;
-  bookDateRange: Array<Date>;
 };
 
 export const LoginPg: FC<LoginPgProps> = (props) => {
-  // export const LoginPg: FC = () => {
   const [password, setPassword] = useState("");
-  //   console.log(props);
   const navigate = useNavigate();
   const [userError, setUserError] = useState("");
   const [pswError, setPswError] = useState("");
@@ -90,9 +87,6 @@ const loginFormStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  // alignSelf: "center",
-  // backgroundColor: "gray",
-  // marginTop: "10%",
 };
 
 const formItemStyle = {

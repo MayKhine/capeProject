@@ -49,7 +49,7 @@ export const Calander: FC<CalanderProps> = ({
           name: name,
         },
       ]);
-
+      setBookingName("");
       setStartBooking(false);
     }
   };
@@ -86,12 +86,21 @@ export const Calander: FC<CalanderProps> = ({
 
   return (
     <>
-      Booking Calander Div
-      <Group
-        position="center"
-        style={{ display: "flex", flexDirection: "row" }}
+      <div style={{ fontSize: "1.2em", paddingTop: "15px" }}>
+        Booking Calander
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: "20px",
+          paddingTop: "15px",
+        }}
       >
-        <div>
+        <Group position="center">
+          {/* <div style={{ backgroundColor: "gray", padding: "30px" }}> */}
           <DatePicker
             style={{
               backgroundColor: "white",
@@ -107,21 +116,13 @@ export const Calander: FC<CalanderProps> = ({
               setError("");
             }}
             size="md"
-            getMonthControlProps={(monthJs) => {
-              console.log("months JS ", monthJs);
-              return {
-                sx: {
-                  fontSize: "25px",
-                },
-              };
-            }}
             getDayProps={(dateJs) => {
               const dt = DateTime.fromJSDate(dateJs).toLocaleString();
 
               if (bookingDictionary[dt] == 1) {
                 return {
                   sx: (theme) => ({
-                    backgroundColor: "lightgray",
+                    backgroundColor: water1,
                     color: "black",
                     ...theme.fn.hover(),
                   }),
@@ -130,7 +131,7 @@ export const Calander: FC<CalanderProps> = ({
               if (bookingDictionary[dt] == 2) {
                 return {
                   sx: () => ({
-                    backgroundColor: "darkgray",
+                    backgroundColor: water3,
                     color: "black",
                   }),
                 };
@@ -144,126 +145,161 @@ export const Calander: FC<CalanderProps> = ({
             }}
           ></DatePicker>
           {error && <div style={{ color: "red" }}>{error}</div>}
-        </div>
+          {/* </div> */}
+        </Group>
 
-        {!startBooking && (
-          <div>
-            <Button
-              onClick={() => {
-                setStartBooking(true);
-              }}
-            >
-              Start Booking
-            </Button>
-          </div>
-        )}
+        <div>
+          {!startBooking && (
+            <div>
+              <Button
+                style={{ backgroundColor: sand2, borderColor: water3 }}
+                onClick={() => {
+                  setStartBooking(true);
+                }}
+              >
+                Start Booking
+              </Button>
+            </div>
+          )}
 
-        {startBooking && (
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            >
-              <label>Wanna share the house</label>
-              <label>
+          {startBooking && (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <label>Are you willing to share the house?</label>
+                <label>
+                  <input
+                    style={{
+                      paddingTop: "5px",
+                      width: "15px",
+                      height: "15px",
+                      marginRight: "10px",
+                    }}
+                    type="radio"
+                    name="radio"
+                    onClick={() => {
+                      setError("");
+                      setPrivacy(1);
+                    }}
+                  ></input>
+                  Yes
+                </label>
+                <label>
+                  <input
+                    style={{
+                      paddingTop: "5px",
+                      width: "15px",
+                      height: "15px",
+                      marginRight: "10px",
+                    }}
+                    type="radio"
+                    name="radio"
+                    onClick={() => {
+                      setError("");
+                      setPrivacy(2);
+                    }}
+                  ></input>
+                  No{" "}
+                </label>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  paddingTop: "10px",
+                }}
+              >
+                <label style={{ textAlign: "left" }}>Booking Name</label>
                 <input
                   style={{
-                    paddingTop: "5px",
-                    width: "20px",
-                    height: "20px",
+                    backgroundColor: sand1,
+                    border: "1px solid",
+                    borderColor: water3,
+                    height: "30px",
+                    borderRadius: "6px",
                   }}
-                  type="radio"
-                  name="radio"
-                  onClick={() => {
+                  value={bookingName}
+                  onChange={(e) => {
                     setError("");
-                    setPrivacy(1);
+                    setBookingName(e.target.value);
                   }}
+                  type="text"
                 ></input>
-                willing to share
-              </label>
-              <label>
-                <input
-                  style={{ paddingTop: "5px", width: "20px", height: "20px" }}
-                  type="radio"
-                  name="radio"
-                  onClick={() => {
-                    setError("");
-                    setPrivacy(2);
-                  }}
-                ></input>
-                prefer privacy
-              </label>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingTop: "10px",
-              }}
-            >
-              <label style={{ textAlign: "left" }}>Booking name</label>
-              <input
-                value={bookingName}
-                onChange={(e) => {
-                  setError("");
-                  setBookingName(e.target.value);
+              </div>
+              <Button
+                style={{
+                  marginTop: "10px",
+                  width: "100px",
+                  backgroundColor: sand2,
+                  borderColor: water3,
                 }}
-                type="text"
-              ></input>
-            </div>
-            <Button
-              style={{ marginTop: "10px", width: "100px" }}
-              onClick={() => {
-                setStartBooking(false);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              style={{ marginTop: "10px", width: "100px" }}
-              onClick={() => {
-                if (dateRange[0] == null) {
-                  setError("Booking start date is not picked!");
-                  return;
-                }
-                if (!privacy) {
-                  setError("Please choose a privacy setting!");
-                  return;
-                }
-                if (!bookingName) {
-                  setError("Please enter a name to book!");
-                  return;
-                }
+                onClick={() => {
+                  setStartBooking(false);
+                  setBookingName("");
+                  setError("");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                style={{
+                  marginTop: "10px",
+                  width: "100px",
+                  backgroundColor: sand2,
+                  borderColor: water3,
+                }}
+                onClick={() => {
+                  if (dateRange[0] == null) {
+                    setError("Booking start date is not picked!");
+                    return;
+                  }
+                  if (!privacy) {
+                    setError("Please choose a privacy setting!");
+                    return;
+                  }
+                  if (!bookingName) {
+                    setError("Please enter a name to book!");
+                    return;
+                  }
 
-                const bookingSuccess = checkBookingDays(
-                  DateTime.fromJSDate(dateRange[0]),
-                  dateRange[1]
-                    ? DateTime.fromJSDate(dateRange[1])
-                    : DateTime.fromJSDate(dateRange[0]),
-                  privacy
-                );
-
-                bookingSuccess &&
-                  updateBookingInfo(
+                  const bookingSuccess = checkBookingDays(
                     DateTime.fromJSDate(dateRange[0]),
                     dateRange[1]
                       ? DateTime.fromJSDate(dateRange[1])
                       : DateTime.fromJSDate(dateRange[0]),
-                    privacy,
-                    bookingName
+                    privacy
                   );
 
-                setDateRange([null, null]);
-              }}
-            >
-              Book
-            </Button>
-          </div>
-        )}
-      </Group>
+                  bookingSuccess &&
+                    updateBookingInfo(
+                      DateTime.fromJSDate(dateRange[0]),
+                      dateRange[1]
+                        ? DateTime.fromJSDate(dateRange[1])
+                        : DateTime.fromJSDate(dateRange[0]),
+                      privacy,
+                      bookingName
+                    );
+
+                  setDateRange([null, null]);
+                }}
+              >
+                Book
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 };
+
+const sand1 = "#F2D6B8";
+const sand2 = "#E7BB8D";
+const water1 = "#BDD7DF";
+const water2 = "#8AB6C6";
+const water3 = "#5F98A9";

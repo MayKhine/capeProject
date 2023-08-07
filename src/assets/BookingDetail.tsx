@@ -2,13 +2,9 @@ import { FC } from "react";
 
 export type BookingDetailProps = {
   bookingInfo: Array<object>;
-  bookingDictionary: Record<string, number>;
 };
 
-export const BookingDetail: FC<BookingDetailProps> = ({
-  bookingInfo,
-  ...rest
-}) => {
+export const BookingDetail: FC<BookingDetailProps> = ({ bookingInfo }) => {
   const sortTheArray = (arr) => {
     return Array.sort((a, b) => {
       return a.startDate - b.startDate;
@@ -16,22 +12,37 @@ export const BookingDetail: FC<BookingDetailProps> = ({
   };
 
   return (
-    <div style={{ backgroundColor: "gray" }}>
-      Booking Detail
-      {bookingInfo
-        .sort((a, b) => {
-          return a.startDate - b.startDate;
-        })
-        .map((booking) => {
-          const startDate = booking.startDate.toLocaleString();
-          const endDate = booking.endDate.toLocaleString();
-          //   console.log("sorted booking? : ", booking);
-          return (
-            <div>
-              {startDate} - {endDate} booked by {booking.name}
-            </div>
-          );
-        })}
+    <div>
+      <div style={{ fontSize: "1.2em", paddingTop: "15px" }}>
+        Booking Detail information
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "480px",
+          padding: "15px",
+        }}
+      >
+        {bookingInfo
+          .sort((a, b) => {
+            return a.startDate - b.startDate;
+          })
+          .map((booking) => {
+            const startDate = booking.startDate.toLocaleString();
+            const endDate = booking.endDate.toLocaleString();
+            //   console.log("sorted booking? : ", booking);
+            return (
+              <li style={{ textAlign: "left" }}>
+                {startDate} - {endDate}
+                <ul style={{ margin: "0px", listStyle: "none" }}>
+                  <li> booked by {booking.name}</li>
+                </ul>
+              </li>
+            );
+          })}
+      </div>
     </div>
   );
 };

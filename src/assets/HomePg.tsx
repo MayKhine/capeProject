@@ -35,16 +35,28 @@ export const HomePg: FC<HomePgProps> = (props) => {
 
   return (
     <div>
-      Welcome to home page {props.loginUser}
+      <div style={{ fontSize: "1.4em", padding: "20px" }}>
+        Welcome to Cape House, {props.loginUser}
+      </div>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent: "center",
           flexWrap: "wrap",
+          gap: "30px",
+          margin: "0px",
+          padding: "0px",
         }}
       >
-        <div style={{ backgroundColor: "pink" }}>
+        <div
+          style={{
+            backgroundColor: water1,
+            maxWidth: "480px",
+            borderRadius: "10px",
+            paddingBottom: "20px",
+          }}
+        >
           <Calander
             setBookingInfo={setBookingInfo}
             bookingInfo={bookingInfo}
@@ -52,11 +64,16 @@ export const HomePg: FC<HomePgProps> = (props) => {
             loginUser={props.loginUser}
           ></Calander>
         </div>
-        <BookingDetail
-          bookingInfo={bookingInfo}
-          bookingDictionary={bookingDictionary}
-        ></BookingDetail>
+        <div style={{ backgroundColor: water1, borderRadius: "10px" }}>
+          <BookingDetail bookingInfo={bookingInfo}></BookingDetail>
+        </div>
       </div>
     </div>
   );
 };
+
+const sand1 = "#F2D6B8";
+const sand2 = "#E7BB8D";
+const water1 = "#BDD7DF";
+const water2 = "#8AB6C6";
+const water3 = "#5F98A9";

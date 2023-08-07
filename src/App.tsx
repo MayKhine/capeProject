@@ -6,16 +6,14 @@ import { HomePg } from "./assets/HomePg";
 import { useState } from "react";
 import { ErrorPg } from "./assets/ErrorPg";
 import { Protected } from "./assets/Protected";
-import { useLocalStorage } from "usehooks-ts";
 
 function App() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginUser, setLoginUser] = useState("");
-  // const [bookDateRange, setBookDateRange] = useState([]);
 
   return (
     <div style={mainDivStyle}>
-      <div style={headerStyle}>Cape House Sharing Project</div>
+      <div style={headerStyle}>House Sharing Project</div>
 
       <div style={containerStyle}>
         <BrowserRouter>
@@ -27,7 +25,6 @@ function App() {
                   <LoginPg
                     setLoginSuccess={setLoginSuccess}
                     setLoginUser={setLoginUser}
-                    // bookDateRange={bookDateRange}
                   />
                 }
               />
@@ -35,11 +32,7 @@ function App() {
                 path="Home"
                 element={
                   <Protected isLoggedIn={loginSuccess}>
-                    <HomePg
-                      loginUser={loginUser}
-                      // setBookDateRange={setBookDateRange}
-                      // bookDateRange={bookDateRange}
-                    />
+                    <HomePg loginUser={loginUser} />
                   </Protected>
                 }
               />
@@ -52,7 +45,17 @@ function App() {
     </div>
   );
 }
+
+const sand1 = "#F2D6B8";
+const sand2 = "#E7BB8D";
+const water1 = "#BDD7DF";
+const water2 = "#8AB6C6";
+const water3 = "#5F98A9";
+
 const mainDivStyle = {
+  padding: "0px",
+  margin: "0px",
+  // maxWidth: "500px",
   width: "100vw",
   height: "100vh",
   backgroundColor: "lightgray",
@@ -61,15 +64,20 @@ const mainDivStyle = {
 };
 
 const headerStyle = {
-  // width: "100%",
-  backgroundColor: "pink",
+  backgroundColor: water3,
+  color: "white",
   height: "50px",
-  fontSize: "1.5em",
+  fontSize: "1em",
+  textAlign: "left",
+  paddingTop: "13px",
+  paddingLeft: "5px",
 };
 
 const containerStyle = {
-  backgroundColor: "lightblue",
+  backgroundColor: sand1,
   flex: "1",
+  padding: "0px",
+  margin: "0px",
 };
 
 export default App;
