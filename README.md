@@ -1,27 +1,21 @@
-# React + TypeScript + Vite
+## Cape Code House Sharing Project: Front End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an app for booking Cape Cod House among family members. This is my first TypeScript + React + Vite project. I created it with `pnpm create vite@latest my-project-name --template react-ts`.
 
-Currently, two official plugins are available:
+This project is just the front end. You will need to run the backend server from this git []. Login password is 'abcd'.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Project Img](https://raw.githubusercontent.com/MayKhine/capeProject/main/public/img/img%201.51.03%20PM.png)
 
-## Expanding the ESLint configuration
+![Project Img 2](https://raw.githubusercontent.com/MayKhine/capeProject/main/public/img/img%201.54.42%20PM.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Install all the dependencies
 
-- Configure the top-level `parserOptions` property like this:
+> pnpm i
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+Start the development server
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+> pnpm start
+
+Build the project
+
+> pnpm build
