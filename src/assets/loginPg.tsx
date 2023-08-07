@@ -16,8 +16,8 @@ export const LoginPg: FC<LoginPgProps> = (props) => {
 
   return (
     <div>
-      Welcome to Cape Cod!
       <div style={loginFormStyle}>
+        <div style={{ fontSize: "1.5em" }}> Welcome to Cape Cod!</div>
         <div style={formItemStyle}>
           <label style={labelStyle}>Name</label>
           <input
@@ -67,19 +67,17 @@ export const LoginPg: FC<LoginPgProps> = (props) => {
           >
             Login
           </button>
-          <button
-            onClick={() => {
-              console.log("date range: ", props.bookDateRange);
-            }}
-          >
-            {" "}
-            Show me date range
-          </button>
         </div>
       </div>
     </div>
   );
 };
+
+const sand1 = "#F2D6B8";
+const sand2 = "#E7BB8D";
+const water1 = "#BDD7DF";
+const water2 = "#8AB6C6";
+const water3 = "#5F98A9";
 
 const loginFormStyle = {
   height: "70vh",
@@ -96,10 +94,12 @@ const formItemStyle = {
 };
 
 const inputStyle = {
-  height: "28px",
+  height: "30px",
   fontSize: "1em",
   borderRadius: "6px",
   border: "1px solid gray",
+  backgroundColor: water1,
+  borderColor: water3,
 };
 
 const labelStyle = {
@@ -118,8 +118,8 @@ const ButtonStyle = {
   borderRadius: "8px",
   border: "1px solid transparent",
   fontSize: "1em",
-  borderColor: "pink",
-  backgroundColor: "darkgray",
+  borderColor: water3,
+  backgroundColor: water2,
   cursor: "pointer",
   // transition: "borderColor 0.9s",
 };

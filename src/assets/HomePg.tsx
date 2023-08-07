@@ -64,9 +64,11 @@ export const HomePg: FC<HomePgProps> = (props) => {
             loginUser={props.loginUser}
           ></Calander>
         </div>
-        <div style={{ backgroundColor: water1, borderRadius: "10px" }}>
-          <BookingDetail bookingInfo={bookingInfo}></BookingDetail>
-        </div>
+        {bookingInfo.length > 0 && (
+          <div style={{ backgroundColor: water1, borderRadius: "10px" }}>
+            <BookingDetail bookingInfo={bookingInfo}></BookingDetail>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -152,7 +152,10 @@ export const Calander: FC<CalanderProps> = ({
           {!startBooking && (
             <div>
               <Button
-                style={{ backgroundColor: sand2, borderColor: water3 }}
+                style={{
+                  bordorColor: sand2,
+                  backgroundColor: water3,
+                }}
                 onClick={() => {
                   setStartBooking(true);
                 }}
@@ -235,8 +238,8 @@ export const Calander: FC<CalanderProps> = ({
                 style={{
                   marginTop: "10px",
                   width: "100px",
-                  backgroundColor: sand2,
-                  borderColor: water3,
+                  bordorColor: sand2,
+                  backgroundColor: water3,
                 }}
                 onClick={() => {
                   setStartBooking(false);
@@ -250,8 +253,8 @@ export const Calander: FC<CalanderProps> = ({
                 style={{
                   marginTop: "10px",
                   width: "100px",
-                  backgroundColor: sand2,
-                  borderColor: water3,
+                  bordorColor: sand2,
+                  backgroundColor: water3,
                 }}
                 onClick={() => {
                   if (dateRange[0] == null) {
