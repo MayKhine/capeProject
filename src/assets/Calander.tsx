@@ -3,10 +3,11 @@ import { Group, Button } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useState } from "react";
 import { DateTime } from "luxon";
+import { Booking } from "./BookingDetail";
 
 export type CalanderProps = {
-  setBookingInfo: (arg0: Array<object>) => void;
-  bookingInfo: Array<object>;
+  setBookingInfo: (arg0: Array<Booking>) => void;
+  bookingInfo: Array<Booking>;
   bookingDictionary: Record<string, number>;
   loginUser: string;
 };
@@ -15,7 +16,6 @@ export const Calander: FC<CalanderProps> = ({
   bookingInfo,
   setBookingInfo,
   bookingDictionary,
-  loginUser,
 }) => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     null,
@@ -34,12 +34,6 @@ export const Calander: FC<CalanderProps> = ({
   ) => {
     const days = calculateDays(startDate, endDate);
     for (let i = 0; i <= days; i++) {
-      const newBooking = {
-        startDate: startDate,
-        endDate: endDate,
-        privacy: privacy,
-        name: name,
-      };
       setBookingInfo([
         ...bookingInfo,
         {
@@ -55,7 +49,7 @@ export const Calander: FC<CalanderProps> = ({
   };
 
   const calculateDays = (startDate: DateTime, endDate: DateTime) => {
-    return (endDate - startDate) / (86400 * 1000);
+    return (endDate.toMillis() - startDate.toMillis()) / (86400 * 1000);
   };
 
   const checkBookingDays = (
@@ -100,7 +94,6 @@ export const Calander: FC<CalanderProps> = ({
         }}
       >
         <Group position="center">
-          {/* <div style={{ backgroundColor: "gray", padding: "30px" }}> */}
           <DatePicker
             style={{
               backgroundColor: "white",
@@ -109,10 +102,9 @@ export const Calander: FC<CalanderProps> = ({
             }}
             weekendDays={[]}
             type="range"
-            allowDeselect
             value={dateRange}
             onChange={setDateRange}
-            onClick={(e) => {
+            onClick={() => {
               setError("");
             }}
             size="md"
@@ -121,10 +113,9 @@ export const Calander: FC<CalanderProps> = ({
 
               if (bookingDictionary[dt] == 1) {
                 return {
-                  sx: (theme) => ({
+                  sx: () => ({
                     backgroundColor: water1,
                     color: "black",
-                    ...theme.fn.hover(),
                   }),
                 };
               }
@@ -153,7 +144,7 @@ export const Calander: FC<CalanderProps> = ({
             <div>
               <Button
                 style={{
-                  bordorColor: sand2,
+                  borderColor: sand2,
                   backgroundColor: water3,
                 }}
                 onClick={() => {
@@ -238,7 +229,7 @@ export const Calander: FC<CalanderProps> = ({
                 style={{
                   marginTop: "10px",
                   width: "100px",
-                  bordorColor: sand2,
+                  borderColor: sand2,
                   backgroundColor: water3,
                 }}
                 onClick={() => {
@@ -253,7 +244,7 @@ export const Calander: FC<CalanderProps> = ({
                 style={{
                   marginTop: "10px",
                   width: "100px",
-                  bordorColor: sand2,
+                  borderColor: sand2,
                   backgroundColor: water3,
                 }}
                 onClick={() => {
@@ -304,5 +295,5 @@ export const Calander: FC<CalanderProps> = ({
 const sand1 = "#F2D6B8";
 const sand2 = "#E7BB8D";
 const water1 = "#BDD7DF";
-const water2 = "#8AB6C6";
+// const water2 = "#8AB6C6";
 const water3 = "#5F98A9";

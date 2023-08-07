@@ -3,7 +3,7 @@ import "./App.css";
 import { LoginPg } from "./assets/LoginPg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePg } from "./assets/HomePg";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import { ErrorPg } from "./assets/ErrorPg";
 import { Protected } from "./assets/Protected";
 
@@ -47,15 +47,14 @@ function App() {
 }
 
 const sand1 = "#F2D6B8";
-const sand2 = "#E7BB8D";
-const water1 = "#BDD7DF";
-const water2 = "#8AB6C6";
+// const sand2 = "#E7BB8D";
+// const water1 = "#BDD7DF";
+// const water2 = "#8AB6C6";
 const water3 = "#5F98A9";
 
-const mainDivStyle = {
+const mainDivStyle: CSSProperties = {
   padding: "0px",
   margin: "0px",
-  // maxWidth: "500px",
   width: "100vw",
   height: "100vh",
   backgroundColor: "lightgray",
@@ -63,7 +62,7 @@ const mainDivStyle = {
   flexDirection: "column",
 };
 
-const headerStyle = {
+const headerStyle: CSSProperties = {
   backgroundColor: water3,
   color: "white",
   height: "50px",

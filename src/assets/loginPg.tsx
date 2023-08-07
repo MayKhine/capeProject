@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { CSSProperties, FC, useState } from "react";
 import { validateAsync } from "../api/validateApi";
 import { useNavigate } from "react-router-dom";
 
@@ -73,13 +73,13 @@ export const LoginPg: FC<LoginPgProps> = (props) => {
   );
 };
 
-const sand1 = "#F2D6B8";
-const sand2 = "#E7BB8D";
+// const sand1 = "#F2D6B8";
+// const sand2 = "#E7BB8D";
 const water1 = "#BDD7DF";
 const water2 = "#8AB6C6";
 const water3 = "#5F98A9";
 
-const loginFormStyle = {
+const loginFormStyle: CSSProperties = {
   height: "70vh",
   display: "flex",
   flexDirection: "column",
@@ -87,13 +87,13 @@ const loginFormStyle = {
   alignItems: "center",
 };
 
-const formItemStyle = {
+const formItemStyle: CSSProperties = {
   width: "300px",
   display: "flex",
   flexDirection: "column",
 };
 
-const inputStyle = {
+const inputStyle: CSSProperties = {
   height: "30px",
   fontSize: "1em",
   borderRadius: "6px",
@@ -102,7 +102,7 @@ const inputStyle = {
   borderColor: water3,
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   marginTop: "5px",
   fontSize: "1em",
   textAlign: "left",

@@ -1,18 +1,19 @@
 import { useState, FC, useMemo } from "react";
 import { Calander } from "./Calander";
-import { Blockquote, Button } from "@mantine/core";
-import { BookingDetail } from "./BookingDetail";
+import { Booking, BookingDetail } from "./BookingDetail";
 export type HomePgProps = {
   loginUser: string;
 };
 
 export const HomePg: FC<HomePgProps> = (props) => {
-  const [bookingInfo, setBookingInfo] = useState<Array<object>>([]);
+  const [bookingInfo, setBookingInfo] = useState<Array<Booking>>([]);
 
   const bookingDictionary = useMemo(() => {
-    let tempDictionary: Record<string, number> = {};
+    const tempDictionary: Record<string, number> = {};
     bookingInfo.forEach((booking) => {
-      const days = (booking.endDate - booking.startDate) / (86400 * 1000);
+      const days =
+        (booking.endDate.toMillis() - booking.startDate.toMillis()) /
+        (86400 * 1000);
       for (let i = 0; i <= days; i++) {
         const key = booking.startDate.plus({ days: i }).toLocaleString();
         tempDictionary[key] = booking.privacy;
@@ -20,18 +21,6 @@ export const HomePg: FC<HomePgProps> = (props) => {
     });
     return tempDictionary;
   }, [bookingInfo]);
-
-  // console.log("Bookign Dictionary: ", bookingDictionary);
-  // const sortedData = bookingInfo.sort((a, b) => {
-  //   console.log(a, b);
-
-  //   let bookingA = a.startDate;
-  //   let bookingB = b.startDate;
-
-  //   if (bookingA < bookingB) return -1;
-  //   if (bookingA > bookingB) return 1;
-  //   return 0;
-  // });
 
   return (
     <div>
@@ -74,8 +63,8 @@ export const HomePg: FC<HomePgProps> = (props) => {
   );
 };
 
-const sand1 = "#F2D6B8";
-const sand2 = "#E7BB8D";
+// const sand1 = "#F2D6B8";
+// const sand2 = "#E7BB8D";
 const water1 = "#BDD7DF";
-const water2 = "#8AB6C6";
-const water3 = "#5F98A9";
+// const water2 = "#8AB6C6";
+// const water3 = "#5F98A9";

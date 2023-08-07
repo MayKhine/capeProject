@@ -1,16 +1,18 @@
+import { DateTime } from "luxon";
 import { FC } from "react";
 
 export type BookingDetailProps = {
-  bookingInfo: Array<object>;
+  bookingInfo: Array<Booking>;
+};
+
+export type Booking = {
+  startDate: DateTime;
+  endDate: DateTime;
+  privacy: number;
+  name: string;
 };
 
 export const BookingDetail: FC<BookingDetailProps> = ({ bookingInfo }) => {
-  const sortTheArray = (arr) => {
-    return Array.sort((a, b) => {
-      return a.startDate - b.startDate;
-    });
-  };
-
   return (
     <div>
       <div style={{ fontSize: "1.2em", paddingTop: "15px" }}>
@@ -27,12 +29,11 @@ export const BookingDetail: FC<BookingDetailProps> = ({ bookingInfo }) => {
       >
         {bookingInfo
           .sort((a, b) => {
-            return a.startDate - b.startDate;
+            return a.startDate.toMillis() - b.startDate.toMillis();
           })
           .map((booking) => {
             const startDate = booking.startDate.toLocaleString();
             const endDate = booking.endDate.toLocaleString();
-            //   console.log("sorted booking? : ", booking);
             return (
               <li style={{ textAlign: "left" }}>
                 {startDate} - {endDate}
